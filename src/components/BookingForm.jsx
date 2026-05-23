@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaUser, FaCalendarAlt, FaUsers, FaBed, FaCheckCircle } from 'react-icons/fa';
+import { FaUser, FaCalendarAlt, FaUsers, FaBed, FaCheckCircle, FaSpinner } from 'react-icons/fa';
+import { submitBooking } from '../services/api';
 
 // Component: BookingForm
 export default function BookingForm({ selectedRoom, focusTrigger }) {
@@ -20,6 +21,12 @@ export default function BookingForm({ selectedRoom, focusTrigger }) {
 
   // useState() - Menyimpan ringkasan booking setelah submit berhasil
   const [bookingSummary, setBookingSummary] = useState(null);
+
+  // useState() - Menyimpan status loading saat memanggil API
+  const [isLoading, setIsLoading] = useState(false);
+
+  // useState() - Menyimpan pesan error jika pemesanan gagal
+  const [submitError, setSubmitError] = useState('');
 
   // useRef() - Referensi ke input nama tamu untuk auto-focus saat section dibuka/diakses
   const guestNameInputRef = useRef(null);
@@ -88,22 +95,34 @@ export default function BookingForm({ selectedRoom, focusTrigger }) {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
-      // Menghitung jumlah malam menginap
-      const date1 = new Date(formData.checkIn);
-      const date2 = new Date(formData.checkOut);
-      const diffTime = Math.abs(date2 - date1);
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      setIsLoading(true);
+      setSubmitError('');
 
-      setBookingSummary({
-        ...formData,
-        nights: diffDays,
-        bookingCode: 'ARC-' + Math.floor(100000 + Math.random() * 900000)
-      });
-      setIsSubmitted(true);
+      try {
+        // Melakukan request HTTPS POST dengan Axios ke server/API mockup
+        await submitBooking(formData);
+
+        // Menghitung jumlah malam menginap
+        const date1 = new Date(formData.checkIn);
+        const date2 = new Date(formData.checkOut);
+        const diffTime = Math.abs(date2 - date1);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        setBookingSummary({
+          ...formData,
+          nights: diffDays,
+          bookingCode: 'ARC-' + Math.floor(100000 + Math.random() * 900000)
+        });
+        setIsSubmitted(true);
+      } catch (err) {
+        setSubmitError('Gagal mengirim pemesanan ke server. Silakan coba kembali.');
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -289,9 +308,27 @@ export default function BookingForm({ selectedRoom, focusTrigger }) {
               )}
             </div>
 
+            {/* Error Message jika API gagal */}
+            {submitError && (
+              <div className="form-group-full" style={{ color: '#ff4d4f', fontSize: '0.9rem', marginBottom: '15px', textAlign: 'center' }}>
+                {submitError}
+              </div>
+            )}
+
             {/* Tombol Submit */}
-            <button type="submit" className="btn-gold booking-submit-btn">
-              Submit Booking
+            <button 
+              type="submit" 
+              className="btn-gold booking-submit-btn"
+              disabled={isLoading}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+            >
+              {isLoading ? (
+                <>
+                  <FaSpinner className="spinner" /> Submitting...
+                </>
+              ) : (
+                'Submit Booking'
+              )}
             </button>
           </form>
         )}

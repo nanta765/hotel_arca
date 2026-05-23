@@ -5,6 +5,7 @@ import RoomCard from '../components/RoomCard';
 import Facilities from '../components/Facilities';
 import BookingForm from '../components/BookingForm';
 import Footer from '../components/Footer';
+import { getLombokWeather } from '../services/api';
 
 // Impor aset gambar lokal
 import deluxeImg from '../assets/deluxe_room.png';
@@ -62,6 +63,9 @@ export default function Home() {
   // useState() - Trigger untuk memfokuskan kursor ke input nama di booking form
   const [focusTrigger, setFocusTrigger] = useState(0);
 
+  // useState() - Menyimpan data cuaca Lombok dari API (Axios HTTPS GET)
+  const [weather, setWeather] = useState(null);
+
   // useRef() - Mereferensikan elemen section Booking Form agar halaman bisa di-scroll secara otomatis
   const bookingSectionRef = useRef(null);
 
@@ -77,6 +81,15 @@ export default function Home() {
     const loadRooms = setTimeout(() => {
       setRooms(DUMMY_ROOM_DATA);
     }, 500);
+
+    // Mengambil data cuaca Lombok real-time menggunakan Axios (GET)
+    getLombokWeather()
+      .then(data => {
+        setWeather(data);
+      })
+      .catch(err => {
+        console.error("Gagal mendapatkan cuaca Lombok via Axios:", err);
+      });
 
     return () => clearTimeout(loadRooms);
   }, []);
@@ -131,7 +144,26 @@ export default function Home() {
         <div className="about-lombok-container">
           {/* About Text */}
           <div className="about-lombok-text">
-            <span className="about-lombok-tag">Discover Lombok</span>
+            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '15px' }}>
+              <span className="about-lombok-tag" style={{ marginBottom: 0 }}>Discover Lombok</span>
+              {weather && (
+                <div className="weather-badge" style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                  border: '1px solid var(--color-gold)',
+                  color: 'var(--color-gold)',
+                  padding: '4px 12px',
+                  borderRadius: '20px',
+                  fontSize: '0.8rem',
+                  gap: '6px',
+                  fontWeight: '500'
+                }}>
+                  <FaSun style={{ color: '#ffb900' }} />
+                  <span>Suhu Lombok: {weather.temperature}°C ({weather.windspeed} km/h Angin)</span>
+                </div>
+              )}
+            </div>
             <h2 className="about-lombok-title">An Island of Untamed Beauty and Pristine Beaches</h2>
             <div className="gold-divider" style={{ margin: '15px 0' }}></div>
             <p className="about-lombok-desc">
