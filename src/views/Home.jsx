@@ -7,6 +7,8 @@ import RoomCard from '../components/RoomCard';
 import Facilities from '../components/Facilities';
 import BookingForm from '../components/BookingForm';
 import Footer from '../components/Footer';
+import Reveal from '../components/Reveal';
+import ScrollUI from '../components/ScrollUI';
 import { getLombokWeather } from '../services/api';
 
 // Icon tambahan untuk About Lombok
@@ -155,6 +157,9 @@ export default function Home() {
 
   return (
     <>
+      {/* Scroll progress bar + back-to-top */}
+      <ScrollUI />
+
       {/* Sticky Top Navigation */}
       <Navbar onBookingClick={() => handleScrollToBooking()} />
 
@@ -163,19 +168,22 @@ export default function Home() {
 
       {/* Room List Section */}
       <section id="rooms">
-        <h2 className="section-title">Rooms & Suites</h2>
-        <div className="gold-divider"></div>
-        <p className="section-subtitle">
-          Discover our curated collection of luxury sanctuaries. Handcrafted with local accents and modern elegance.
-        </p>
+        <Reveal direction="up">
+          <h2 className="section-title">Rooms & Suites</h2>
+          <div className="gold-divider"></div>
+          <p className="section-subtitle">
+            Discover our curated collection of luxury sanctuaries. Handcrafted with local accents and modern elegance.
+          </p>
+        </Reveal>
 
         <div className="rooms-grid">
-          {rooms.map((room) => (
-            <RoomCard
-              key={room.id}
-              room={room}
-              onBookRoom={(name) => handleScrollToBooking(name)}
-            />
+          {rooms.map((room, index) => (
+            <Reveal key={room.id} direction="up" delay={index * 120}>
+              <RoomCard
+                room={room}
+                onBookRoom={(name) => handleScrollToBooking(name)}
+              />
+            </Reveal>
           ))}
         </div>
       </section>
@@ -187,7 +195,7 @@ export default function Home() {
       <section id="about">
         <div className="about-lombok-container">
           {/* About Text */}
-          <div className="about-lombok-text">
+          <Reveal direction="right" as="div" className="about-lombok-text">
             <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '15px' }}>
               <span className="about-lombok-tag" style={{ marginBottom: 0 }}>Discover Lombok</span>
               {weather && (
@@ -240,30 +248,34 @@ export default function Home() {
             >
               Book Your Getaway
             </button>
-          </div>
+          </Reveal>
 
           {/* About Image Frame */}
-          <div className="about-lombok-img-wrapper">
-            <img 
-              src={rinjaniImg} 
-              alt="Beautiful Mount Rinjani landscape in Lombok" 
-              className="about-lombok-img" 
-              loading="lazy"
-            />
-            <div className="about-lombok-img-overlay">
-              <h3 className="about-lombok-img-caption">Mount Rinjani</h3>
-              <p className="about-lombok-img-sub">The Majestic Heart of Lombok</p>
+          <Reveal direction="left" as="div" className="about-lombok-reveal">
+            <div className="about-lombok-img-wrapper float-animate">
+              <img 
+                src={rinjaniImg} 
+                alt="Beautiful Mount Rinjani landscape in Lombok" 
+                className="about-lombok-img" 
+                loading="lazy"
+              />
+              <div className="about-lombok-img-overlay">
+                <h3 className="about-lombok-img-caption">Mount Rinjani</h3>
+                <p className="about-lombok-img-sub">The Majestic Heart of Lombok</p>
+              </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* Form Reservasi (Booking) Section */}
       <div ref={bookingSectionRef}>
-        <BookingForm 
-          selectedRoom={selectedRoomForBooking} 
-          focusTrigger={focusTrigger} 
-        />
+        <Reveal direction="up">
+          <BookingForm 
+            selectedRoom={selectedRoomForBooking} 
+            focusTrigger={focusTrigger} 
+          />
+        </Reveal>
       </div>
 
       {/* Footer Details */}

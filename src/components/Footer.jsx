@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaInstagram, FaFacebookF, FaTwitter, FaYoutube, FaConciergeBell } from 'react-icons/fa';
+import Reveal from './Reveal';
 
 // Component: Footer
 export default function Footer() {
@@ -8,7 +9,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer-grid">
         {/* Kolom 1: Tentang Resort */}
-        <div className="footer-col footer-col-about">
+        <Reveal direction="up" delay={0} className="footer-col footer-col-about">
           <div className="footer-logo" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <img src="/assets/logo.png" alt="Hotel Arca Logo" style={{ height: '55px', width: 'auto', filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.25))' }} />
             <div style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.1' }}>
@@ -35,10 +36,10 @@ export default function Footer() {
               <FaYoutube />
             </a>
           </div>
-        </div>
+        </Reveal>
 
         {/* Kolom 2: Tautan Menu */}
-        <div className="footer-col">
+        <Reveal direction="up" delay={100} className="footer-col">
           <h4>Navigation</h4>
           <ul className="footer-links">
             <li><a href="#home" className="footer-link">Home</a></li>
@@ -47,19 +48,19 @@ export default function Footer() {
             <li><a href="#about" className="footer-link">About Lombok</a></li>
             <li><a href="#booking" className="footer-link">Book Now</a></li>
           </ul>
-        </div>
+        </Reveal>
 
         {/* Kolom 3: Jam Layanan & Kebijakan */}
-        <div className="footer-col">
+        <Reveal direction="up" delay={200} className="footer-col">
           <h4>Resort Info</h4>
           <p><strong>Check-in:</strong> 14:00 PM</p>
           <p><strong>Check-out:</strong> 12:00 PM</p>
           <p><strong>Reception:</strong> Open 24 Hours</p>
           <p><strong>Dress Code:</strong> Smart Casual in Dining Areas</p>
-        </div>
+        </Reveal>
 
         {/* Kolom 4: Kontak & Alamat */}
-        <div className="footer-col">
+        <Reveal direction="up" delay={300} className="footer-col">
           <h4>Contact Us</h4>
           
           <div className="footer-contact-item">
@@ -76,7 +77,7 @@ export default function Footer() {
             <FaEnvelope />
             <span>info@hotelarca.com</span>
           </div>
-        </div>
+        </Reveal>
       </div>
 
       {/* Baris Bawah / Hak Cipta */}

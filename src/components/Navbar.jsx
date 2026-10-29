@@ -58,11 +58,11 @@ export default function Navbar({ onBookingClick }) {
 
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
-      <Link href="/" className="navbar-logo" onClick={closeMobileMenu} style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
-        <img src="/assets/logo.png" alt="Hotel Arca" style={{ height: '60px', width: 'auto', filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.18))' }} />
-        <div style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.1' }}>
-          <span style={{ fontFamily: 'var(--font-title, "Playfair Display", serif)', fontSize: '0.7rem', fontWeight: '400', color: 'var(--color-gold, #c8a45a)', letterSpacing: '3px', textTransform: 'uppercase' }}>Hotel</span>
-          <span style={{ fontFamily: 'var(--font-title, "Playfair Display", serif)', fontSize: '1.5rem', fontWeight: '700', color: 'var(--color-blue-deep, #1a3c5e)', letterSpacing: '2px', textTransform: 'uppercase' }}>Arca</span>
+      <Link href="/" className="navbar-logo" onClick={closeMobileMenu} style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+        <img src="/assets/logo.png" alt="Hotel Arca" style={{ height: '46px', width: 'auto', filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.18))' }} />
+        <div style={{ display: 'flex', flexDirection: 'column', lineHeight: '1.05' }}>
+          <span style={{ fontFamily: 'var(--font-title, "Playfair Display", serif)', fontSize: '0.62rem', fontWeight: '400', color: 'var(--color-gold, #c8a45a)', letterSpacing: '2.5px', textTransform: 'uppercase' }}>Hotel</span>
+          <span style={{ fontFamily: 'var(--font-title, "Playfair Display", serif)', fontSize: '1.25rem', fontWeight: '700', color: 'var(--color-blue-deep, #1a3c5e)', letterSpacing: '1.5px', textTransform: 'uppercase' }}>Arca</span>
           <span style={{ display: 'block', width: '100%', height: '1.5px', background: 'linear-gradient(90deg, var(--color-gold, #c8a45a), transparent)', marginTop: '2px' }}></span>
         </div>
       </Link>

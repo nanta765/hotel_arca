@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaWifi, FaHotel, FaMapMarkerAlt, FaCoffee } from 'react-icons/fa';
+import Reveal from './Reveal';
 
 // Component: Facilities
 export default function Facilities() {
@@ -33,21 +34,25 @@ export default function Facilities() {
 
   return (
     <section id="facilities" className="facilities-section">
-      <h2 className="section-title">Resort Facilities</h2>
-      <div className="gold-divider"></div>
-      <p className="section-subtitle">
-        Immerse yourself in world-class amenities designed to make your tropical getaway in Lombok unforgettable.
-      </p>
+      <Reveal direction="up">
+        <h2 className="section-title">Resort Facilities</h2>
+        <div className="gold-divider"></div>
+        <p className="section-subtitle">
+          Immerse yourself in world-class amenities designed to make your tropical getaway in Lombok unforgettable.
+        </p>
+      </Reveal>
 
       <div className="facilities-grid">
         {facilitiesList.map((facility, index) => (
-          <div key={index} className="facility-card">
-            <div className="facility-icon-container">
-              {facility.icon}
+          <Reveal key={index} direction="up" delay={index * 120}>
+            <div className="facility-card">
+              <div className="facility-icon-container">
+                {facility.icon}
+              </div>
+              <h3 className="facility-name">{facility.name}</h3>
+              <p className="facility-desc">{facility.desc}</p>
             </div>
-            <h3 className="facility-name">{facility.name}</h3>
-            <p className="facility-desc">{facility.desc}</p>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>

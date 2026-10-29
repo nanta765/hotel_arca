@@ -259,15 +259,20 @@ export default function BookingForm({ selectedRoom, focusTrigger }) {
             <button onClick={handleReset} className="btn-gold">Book Another Room</button>
           </div>
         ) : !currentUser ? (
-          <div className="login-prompt-container" style={{ textAlign: 'center', padding: '40px 20px' }}>
-            <FaLock size={45} style={{ color: 'var(--color-gold)', marginBottom: '16px' }} />
-            <h3 style={{ fontFamily: 'var(--font-title)', color: 'var(--color-blue-deep)', fontSize: '1.6rem', marginBottom: '12px' }}>Login Diperlukan</h3>
-            <p style={{ color: 'var(--color-text-light)', marginBottom: '24px', maxWidth: '400px', margin: '0 auto 24px auto', fontSize: '0.95rem' }}>
+          <div className="login-prompt">
+            <div className="login-prompt-icon">
+              <FaLock size={28} />
+            </div>
+            <h3 className="login-prompt-title">Login Diperlukan</h3>
+            <p className="login-prompt-text">
               Silakan login atau daftarkan akun Anda terlebih dahulu untuk melakukan reservasi kamar di Hotel Arca.
             </p>
-            <Link href="/login" className="btn-gold" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+            <Link href="/login" className="btn-gold login-prompt-btn">
               Login / Register Sekarang
             </Link>
+            <span className="login-prompt-note">
+              Sudah punya akun? Masuk untuk melanjutkan pemesanan.
+            </span>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="booking-form" noValidate>
